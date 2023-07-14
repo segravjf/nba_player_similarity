@@ -1,5 +1,5 @@
 # Who can replace Bruce Brown for the Nuggets? NBA Player Similarity
-![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/32df255b-31d9-4491-8f1b-e9d4bb659fd8)
+<img src="https://github.com/segravjf/nba_player_similarity/assets/13812785/32df255b-31d9-4491-8f1b-e9d4bb659fd8" alt="Nuggets winning the championship" style="width:600px;"/>
 
 They finally did it. After more than 50 years of existence, the Denver Nuggets won their first ever NBA Championship. I couldn't believe my eyes. The Nuggets were probably one of the first sport teams I remember rooting for, basking in live games featuring Alphonso Ellis and Dikembe Mutombo. As a kid barely of reading age, I remember eagerly opening up the newspaper every fall and winter morning to see if a new box score was available for me to peruse. And finally, they climbed that apex and did it.
 
@@ -7,7 +7,7 @@ There were celebrations in the streets, parades through downtown Denver, odes to
 
 And then it was time to think about next season.
 
-![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/0774cacb-a9a0-46cf-9add-d8d14268a798)
+<img src="https://github.com/segravjf/nba_player_similarity/assets/13812785/0774cacb-a9a0-46cf-9add-d8d14268a798" alt="Bruce Brown holding the NBA championship trophy" style="width:300px;"/>
 
 A player who caught my eye during this championship run wasn't the biggest star (Nikola Jokic), the players who overcame traumatic injuries (Jamal Murray, Michael Porter Jr.), or the physical workhorse (Aaron Gordon). I was pleasantly surprised all year by Bruce Brown, a summer pickup who signed for a modest contract to anchor Denver's second line. By the end of the campaign, BB was slotting in with other starters, mixing his ballhandling and cutting skills off the dribble on offense with shutdown defense for multiple position groups.
 
@@ -16,7 +16,7 @@ Following the end of the season, Brown opted out of his contract's second year, 
 
 While there will never be anyone with precisely the skillset of Bruce Brown for the 2023-24 Denver Nuggets, who should they target to bring in as a free agent to fill in his responsibilities?
 
-Analytics can help us here.
+Analytics can help us in this venture.
 
 ## The methodology
 We can use a variety of statistics, including shooting, (possession-adjusted) counting stats, and advanced metrics widely used by coaching and front offices across the NBA to understand what Bruce Brown does well, and subsequently identify other players who are similar to his skillset. 
@@ -27,11 +27,11 @@ I was initially inspired by a similar application in soccer/football by Ben Grif
 
 A key piece of this analysis is not to throw the entire kitchen sink of stats at this algorithm and let it cook, but to focus specifically on *stylistic* indicators over *performance* indicators. While some stats can be used for both use cases (such as usage rate, some adjusted field goal stats, etc.), we wouldn't want to include holistic grade stats like PER, RAPTOR, and the like. They should instead be used as dimensions to filter down candidates.
 
-## The data
-The NBA is replete with strong data sources. I initially used the [NBA API](https://github.com/swar/nba_api) to gather some basic stats for all players, but then decided it was actually easier to download the data of interest from Basketball Reference, which has convenient stats for advanced, shooting, and per possession for all players in an easily downloadable format. While the NBA API has more granular data available, I think I could piece together the profiles I want from the Basketball Ref data alone.
-
 My primary inspiration for which stats to use came from past research around NBA player archetypes. [This clustering analysis](https://global-uploads.webflow.com/5f1af76ed86d6771ad48324b/5f6a65517f9440891b8e35d0_Kalman_NBA_Line_up_Analysis.pdf) shared at the Sloan Sports Conference 2019 by Kalman & Bosch created segments of basketball players, which isn't unlike similarity, and identified a broad set of stats that Basketball Reference already made available. I decided to use that as the basis for the similarity vectors.
 ![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/1ba539a6-90ad-4d63-a844-3c5fbce10037)
+
+## The data
+The NBA is replete with strong data sources. I initially used the [NBA API](https://github.com/swar/nba_api) to gather some basic stats for all players, but then decided it was actually easier to download the data of interest from [Basketball Reference](https://www.basketball-reference.com/), which has convenient datasets available for [advanced](https://www.basketball-reference.com/leagues/NBA_2023_advanced.html), [shooting](https://www.basketball-reference.com/leagues/NBA_2023_shooting.html), and [per possession](https://www.basketball-reference.com/leagues/NBA_2023_per_poss.html) for all players in an easily downloadable format. While the NBA API has more granular data available, I think I could piece together the profiles I want from the Basketball Ref data alone. I downloaded the datasets to CSV and imported them directly for use in the analysis.
 
 ## Results
 While there is a lot more detail in the notebook, there were some fascinating early results:
