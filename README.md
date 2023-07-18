@@ -34,7 +34,7 @@ My primary inspiration for which stats to use came from past research around NBA
 The NBA is replete with strong data sources. I initially used the [NBA API](https://github.com/swar/nba_api) to gather some basic stats for all players, but then decided it was actually easier to download the data of interest from [Basketball Reference](https://www.basketball-reference.com/), which has convenient datasets available for [advanced](https://www.basketball-reference.com/leagues/NBA_2023_advanced.html), [shooting](https://www.basketball-reference.com/leagues/NBA_2023_shooting.html), and [per possession](https://www.basketball-reference.com/leagues/NBA_2023_per_poss.html) for all players in an easily downloadable format. While the NBA API has more granular data available, I think I could piece together the profiles I want from the Basketball Ref data alone. I downloaded the datasets to CSV and imported them directly for use in the analysis.
 
 ## Results
-While there is a lot more detail in the notebook, there were some fascinating early results:
+The cosine similarity exercise outputted some fascinating early results before filtering to actually available players: 
 
 ```python
 ## Find similar players to Bruce Brown
@@ -49,16 +49,43 @@ Based on the early results from the similarity score, two players that Denver al
 
 While more analysis is needed to make definitive conclusions, this gives me a hypothesis that there may exist something of a "Denver system" that role players can plug into, which somewhat allays my fears of an unfillable talent hole caused by Brown's departure.
 
-We also seem to see a bevy of other higher-usage bench guys like your McDanielses and your Terance Manns. 
+We also seem to see a bevy of other higher-usage bench guys like your McDanielses and your Terance Manns. Including usage rate in the similarity limits existing big-name stars from being included as high scoring comps to match the role that Brown inhabits for the Nuggets. This is a tradeoff of that inclusion: high usage players also tend to be quite talented players, as there aren't a lot of situations in the league where efficient scorers purposefully take less time on the ball. The Nuggets are one of those places, but they also have some cap difficulties due to those other high earners in the starting lineup. Brown coming to Denver on a "prove it" deal was an impressive coup for both player and team that will be hard to replicate.
+
+Looking at specific comps who are available shows some of that difficulty:
+![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/694a45c4-5854-4b08-9fd7-150491a4a3d2)
+
+The players listed here sit at the middle of the Venn diagram of (1) availability, (2) similarity, and (3) output. None of the players in this comp group matched the overall output of Brown across most all-in-one metrics of value (PER of 13, WS/48 of 0.09, VORP of 0.9; all pretty solid for the minutes and limited role he was alotted). 
+
+From the initial list, we winnowed the group to 14 finalists:
+
+<img width="218" alt="image" src="https://github.com/segravjf/nba_player_similarity/assets/13812785/150a845b-2392-49f7-b70d-2c82aadc2984">
+
+
+Going one level deeper, we assessed each of these finalists against key dimensions that BB brought to the 2022-23 Nuggs:
+* Defense (these are admittedly not the best catchall metrics of defensive value, but BB did score well on all of these dimensions)
+  ![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/ff435df1-fd5b-45b3-91b2-fed835c98d96)
+  ![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/7ac29921-677d-48e9-858f-732af169bd3d)
+* Shooting (the dimension that BB was weakest over the regular season)
+  ![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/2f61ec76-22cd-42ab-b89a-a457469f3cd4)
+* And playmaking/ballhandling
+
+  ![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/20e8f483-772a-47ef-a67a-84c7a1aae3e9)
+
+Putting these profiles together, we can see some players who contribute more to each dimension than others. We can illustrate that here:
+![image](https://github.com/segravjf/nba_player_similarity/assets/13812785/7abc8746-c355-4ce0-9e3e-e9c550f72adc)
+
+So who is the ideal Bruce Brown sixth man replacement for the Nuggets?
+* **Hamidou Dially** was one of the few players who scored more efficiently than BB while being highly similar in style, while not "excelling" at any one dimension. What he lacks in 3P shooting, he makes up for in overall scoring efficiency, largely from driving, while still showing strong defense in a limited (injury-addled) role.
+* **Javonte Green** checked the boxes on shooting and defense, though his absolute output and usage could raise some flags. He hews closer to a small-ball forward contributor, but played plenty of SG as well. If the Nuggets are comfortable with Reggie Jackson owning ballhandling when Jamal Murray is out, he could slot in well as a complementary scorer.
+* **Dennis Smith Jr.** is an interesting veteran option, more of a pure PG with strong playmaking and defensive contributions. While he hasn't been an efficient scorer, a more specialized role in Denver focused on his strengths could raise those figures.
+* The most likely outcome is a growth in minutes for existing teammates **Christian Braun** and **Peyton Watson**, potentially leveraging them differently based on matchups.
+
+In all, this question is a luxury for a championship team whose window to win it all again is still wide open. With all 5 starters coming back, the Nuggets have a whole season to get their sixth man situation solved.
 
 
 ## What's next?
-This analysis is not yet finished, as I'm hoping to import some contract data to further filter down the available signees the Nuggets could make. This includes:
-* Filter down top matches to only those players who are available to sign (and ideally can fit into the Nuggets' cap situation).
-* Do more to validate the algorithm against other use cases, perhaps by testing known play style doppelgangers.
-* Analyze the most similar players to BB against catchall output metrics to understand not only similarities, but outputs, to guide the Nuggets' decision making.
-
-In addition, we could look at further enhancements to the similarity score by adding or replacing existing stats:
-* Rather than using catchall stats for 2 point and 3 point shots taken, use more specific ranges to differentiate layups, floaters, midrange jumpers, etc. to find those who not only take similar shot volumes of each to BB, but also those who like to frequent the same areas of the floor for their shots.
+This analysis is not comprehensive -- a lot of the metrics choices were made out of convenience and availability of key metrics, while glazing over some of what Bruce Brown did best (probably something that merits its own section in this analysis). In particular, with another week or so, I would investigate some of these tweaks:
+* Rather than using catchall stats for 2 point and 3 point shots taken, use more specific ranges to differentiate layups, floaters, midrange jumpers, etc. to find those who not only take similar shot volumes of each to BB, but also those who like to frequent the same areas of the floor for their shots. In addition, breaking out shots by self-generated vs. catch-and-shoot gets more to the style of shooting than flat-out accuracy.
 * Find a better proxy for both "cut and slash" behavior (a big feature of Denver offenses that BB excelled at) and % of time defending key offensive players (another responsibility that BB took on).
 * Think about a better way to limit similar players than positions, which are pretty fluid.
+* Finally, a more rigorous breakdown of the similarity metric I crafted could go a long way to ensuring its validity in making some of these decisions, as well as a way to quickly "scorecard" why one player matches well with BB for better sharing.
